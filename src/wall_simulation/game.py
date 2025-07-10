@@ -1,0 +1,60 @@
+import pygame
+
+from wall_simulation.geometry.triangles import Triangle
+from wall_simulation.geometry.vector import Vector
+
+WINDOW_WIDTH = 1280
+WINDOW_HEIGHT = 720
+PLAY_AREA_WIDTH = 400
+PLAY_AREA_HEIGHT = 500
+
+
+class GameEnv:
+    def __init__(self):
+        self.play_area_x = WINDOW_WIDTH / 2 - PLAY_AREA_WIDTH / 2
+        self.play_area_y = 100
+
+    def init_render(self):
+        pygame.init()
+        self.window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
+        self.clock = pygame.time.Clock()
+
+    def render(self):
+        self.window.fill((0, 0, 0))
+        # Draw the playing box
+        self._draw_play_area()
+
+        v1 = Vector(0, 200, 0, 0)
+        v2 = Vector(300, 0, 0, 0)
+        pos = Vector(self.play_area_x + 50, self.play_area_y + 50)
+
+        t = Triangle(pos, v1, v2)
+        t.draw(self.window)
+
+        pygame.display.update()
+
+    def _draw_play_area(self):
+        # Horizontal Base
+        pygame.draw.line(
+            self.window,
+            (255, 255, 255),
+            (self.play_area_x, self.play_area_y + PLAY_AREA_HEIGHT),
+            (self.play_area_x + PLAY_AREA_WIDTH, self.play_area_y + PLAY_AREA_HEIGHT),
+            2,
+        )
+        # Left Wall
+        pygame.draw.line(
+            self.window,
+            (255, 255, 255),
+            (self.play_area_x, self.play_area_y),
+            (self.play_area_x, self.play_area_y + PLAY_AREA_HEIGHT),
+            2,
+        )
+        # Right Wall
+        pygame.draw.line(
+            self.window,
+            (255, 255, 255),
+            (self.play_area_x + PLAY_AREA_WIDTH, self.play_area_y),
+            (self.play_area_x + PLAY_AREA_WIDTH, self.play_area_y + PLAY_AREA_HEIGHT),
+            2,
+        )
