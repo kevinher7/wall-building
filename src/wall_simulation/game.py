@@ -1,12 +1,13 @@
 import pygame
 
-from wall_simulation.geometry.triangles import Triangle
 from wall_simulation.geometry.vector import Vector
+from wall_simulation.utils.generate_triangles import generate_triangles
 
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
 PLAY_AREA_WIDTH = 400
 PLAY_AREA_HEIGHT = 500
+FIGURE_AVERAGE_SIZE = 50
 
 
 class GameEnv:
@@ -19,17 +20,17 @@ class GameEnv:
         self.window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
         self.clock = pygame.time.Clock()
 
+        # Generate random triangles
+        pos = Vector(self.play_area_x + 50, self.play_area_y + 50)
+        self.triangles = generate_triangles(1, FIGURE_AVERAGE_SIZE, pos)
+
     def render(self):
         self.window.fill((0, 0, 0))
         # Draw the playing box
         self._draw_play_area()
 
-        v1 = Vector(0, 200, 0, 0)
-        v2 = Vector(300, 0, 0, 0)
-        pos = Vector(self.play_area_x + 50, self.play_area_y + 50)
-
-        t = Triangle(pos, v1, v2)
-        t.draw(self.window)
+        for t in self.triangles:
+            t.draw(self.window)
 
         pygame.display.update()
 
