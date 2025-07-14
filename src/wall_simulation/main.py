@@ -14,6 +14,12 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    environment.drop()
+
+        if environment.is_dropping:
+            environment.drop()
 
         environment.render()
 
