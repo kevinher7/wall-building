@@ -14,6 +14,8 @@ class GameEnv:
     def __init__(self):
         self.play_area_x = WINDOW_WIDTH / 2 - PLAY_AREA_WIDTH / 2
         self.play_area_y = 100
+        self.gravity = 2  # Reduced gravity for slower fall
+        self.is_dropping = False
 
     def init_render(self):
         pygame.init()
@@ -24,6 +26,8 @@ class GameEnv:
         pos = Vector(self.play_area_x + 50, self.play_area_y + 50)
         self.triangles = generate_triangles(1, FIGURE_AVERAGE_SIZE, pos)
 
+        self.current_triangle = self.triangles[-1]
+
     def render(self):
         self.window.fill((0, 0, 0))
         # Draw the playing box
@@ -33,6 +37,17 @@ class GameEnv:
             t.draw(self.window)
 
         pygame.display.update()
+
+    def drop(self):
+        if not self.is_dropping:
+            self.triangle_velocity = Vector(0, 0)
+            self.fall_time = 0
+            self.is_dropping = True
+
+        self.current_triangle.move(self.triangle_velocity)
+        # Update time and velocity
+        self.fall_time += 1 / 30
+        self.triangle_velocity.y_f += self.gravity * self.fall_time
 
     def _draw_play_area(self):
         # Horizontal Base
