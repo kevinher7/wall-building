@@ -14,3 +14,7 @@ class Triangle:
     def draw(self, window):
         for edge in self.edges:
             pygame.draw.line(window, (255, 255, 255), (edge.x_0, edge.y_0), (edge.x_f, edge.y_f), 3)
+
+    def move(self, vec: Vector):
+        for index, edge in enumerate(self.edges):
+            self.edges[index] = edge.translate(vec)
