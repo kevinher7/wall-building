@@ -1,7 +1,7 @@
 import pygame
+from pygame.math import Vector2 as Vec2
 
-from wall_simulation.geometry.triangles import Triangle
-from wall_simulation.geometry.vector import Vector
+from wall_simulation.geometry.triangles import Polygon
 
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
@@ -24,12 +24,14 @@ class GameEnv:
         # Draw the playing box
         self._draw_play_area()
 
-        v1 = Vector(0, 200, 0, 0)
-        v2 = Vector(300, 0, 0, 0)
-        pos = Vector(self.play_area_x + 50, self.play_area_y + 50)
+        v1 = Vec2(0, 200)
+        v2 = Vec2(300, 0)
+        v3 = Vec2(400, 500)
 
-        t = Triangle(pos, v1, v2)
-        t.draw(self.window)
+        p = Polygon([v1, v2, v3])
+        pos = Vec2(self.play_area_x + 50, self.play_area_y + 50)
+
+        p.draw(self.window)
 
         pygame.display.update()
 
