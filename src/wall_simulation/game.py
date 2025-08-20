@@ -1,7 +1,7 @@
 import pygame
 from pygame.math import Vector2 as Vec2
 
-from wall_simulation.geometry.triangles import Polygon
+from wall_simulation.geometry.polygon import Polygon
 
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
