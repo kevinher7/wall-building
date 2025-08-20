@@ -4,17 +4,17 @@ from wall_simulation.geometry.vector import Vector
 
 
 class Triangle:
-    def __init__(self, pos: Vector, vec1: Vector, vec2: Vector):
+    def __init__(self, pos: Vector, vec1: Vector, vec2: Vector) -> None:
         self.pos = pos
-        self.edges = [vec1.translate(pos), vec2.translate(pos)]
+        self.edges: list[Vector] = [vec1.translate(pos), vec2.translate(pos)]
 
         last_edge = self.edges[1] - self.edges[0]
         self.edges.append(last_edge.translate(self.edges[0]))
 
-    def draw(self, window):
+    def draw(self, window) -> None:
         for edge in self.edges:
             pygame.draw.line(window, (255, 255, 255), (edge.x_0, edge.y_0), (edge.x_f, edge.y_f), 3)
 
-    def move(self, vec: Vector):
+    def move(self, vec: Vector) -> None:
         for index, edge in enumerate(self.edges):
             self.edges[index] = edge.translate(vec)
